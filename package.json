@@ -1,0 +1,27 @@
+{
+  "name": "secure-payment-component",
+  "version": "1.0.0",
+  "description": "Framework-agnostic, secure payment card input Web Component",
+  "main": "dist/secure-payment.umd.js",
+  "module": "dist/secure-payment.esm.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "keywords": ["payment", "web-component", "stripe-like", "credit-card", "tokenization"],
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@testing-library/dom": "^9.3.3",
+    "rollup": "^4.9.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  }
+}

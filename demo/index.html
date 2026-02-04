@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment - Vanilla Demo</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 2rem; max-width: 420px; }
+    h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+    .amount { color: #666; margin-bottom: 1rem; }
+    #message { margin: 1rem 0; padding: 0.75rem; border-radius: 6px; display: none; }
+    #message.success { background: #d4edda; color: #155724; display: block; }
+    #message.error { background: #f8d7da; color: #721c24; display: block; }
+    button { width: 100%; min-height: 44px; padding: 12px; font-size: 1rem; font-weight: 600; color: #fff; background: #5469d4; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover:not(:disabled) { background: #4358c4; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .hint { margin-top: 1rem; font-size: 0.75rem; color: #888; }
+  </style>
+</head>
+<body>
+  <h1>Checkout</h1>
+  <p class="amount">Amount: $99.00 USD</p>
+
+  <secure-payment-form id="payment" theme="default" locale="en-US"></secure-payment-form>
+
+  <div id="message" role="alert"></div>
+  <button id="pay-btn" type="button" disabled>Pay $99.00</button>
+
+  <p class="hint">Test: 4242 4242 4242 4242 (success), 4000 0000 0000 0002 (insufficient funds), 4000 0000 0000 9995 (declined), 4000 0000 0000 0069 (expired)</p>
+
+  <script src="../dist/secure-payment.umd.js"></script>
+  <script>
+    const form = document.getElementById('payment');
+    const btn = document.getElementById('pay-btn');
+    const message = document.getElementById('message');
+
+    form.addEventListener('payment-ready', () => { message.textContent = ''; message.className = ''; });
+    form.addEventListener('payment-change', (e) => {
+      btn.disabled = !e.detail.complete;
+      message.textContent = '';
+      message.className = '';
+    });
+    form.addEventListener('payment-error', (e) => {
+      message.textContent = e.detail.message;
+      message.className = 'error';
+    });
+
+    btn.addEventListener('click', async () => {
+      const result = await form.createToken();
+      if ('error' in result) {
+        message.textContent = result.error.message;
+        message.className = 'error';
+        return;
+      }
+      message.textContent = 'Payment successful! Token: ' + result.token.slice(0, 20) + '...';
+      message.className = 'success';
+      form.clear();
+      btn.disabled = true;
+    });
+  </script>
+</body>
+</html>
