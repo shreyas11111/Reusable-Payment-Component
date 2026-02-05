@@ -1,4 +1,5 @@
 # Production-Grade Reusable Payment Component
+<img width="798" height="770" alt="image" src="https://github.com/user-attachments/assets/a77af652-1522-4d61-bc9c-e447f3276273" />
 
 A **framework-agnostic, secure payment card input** Web Component that works like Stripe Elements—secure, tokenized payment collection for any web app (Angular, React, Vue, or vanilla HTML).
 
